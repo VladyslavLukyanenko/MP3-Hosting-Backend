@@ -17,7 +17,14 @@ var upload = multer({ storage: storage })
 
 router.post('/', upload.single('file'), function (req, res) {
   res.status(200).send("http://URL/" + req.file.path);
-  setTimeout(function(){fs.unlinkSync(path.join(__dirname, '../uploads', req.file.filename));}, 300000);
+  setTimeout(function(){
+      
+      let filename = path.join(__dirname, '../uploads', req.file.filename);
+          if (fs.existsSync(filename)) {
+        fs.unlinkSync(filename);
+       }else{}
+  
+  }, 300000);
 });
 
 module.exports = router;
